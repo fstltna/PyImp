@@ -1,2 +1,5 @@
 # Python Byte Code Files
 *.pyc
+
+# PyImp Databases
+EmpDB
