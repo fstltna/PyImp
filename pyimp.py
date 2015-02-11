@@ -210,8 +210,8 @@ To contact the developers, please send email to <info@empiredirectory.net>.
     try:
         empDb.DBIO.load(FILE)
     except:
-        print ("PTkEI: Encountered error while loading database.\n"
-               "PTkEI: Perhaps this is an old database?\n")
+        print ("PyImp: Encountered error while loading database.\n"
+               "PyImp: Perhaps this is an old database?\n")
         traceback.print_exc()
         sys.exit()
     # Setup an automatic database saver.
@@ -264,11 +264,11 @@ if __name__=='__main__':
 ##      # Pmw hack
 ##      sys.path[:0] = ['/scratch/koconnor', '/usr/src']
 
-    pygame.init() # ZZZ
-    pygame.mixer.music.load("theme.wav")
-    pygame.mixer.music.play(-1)
-    effect = pygame.mixer.Sound('click2.wav')
-    effect.play()
+#    pygame.init() # ZZZ
+#    pygame.mixer.music.load("theme.wav")
+#    pygame.mixer.music.play(-1)
+#    effect = pygame.mixer.Sound('click2.wav')
+#    effect.play()
 
     # Go!
     viewer.main()

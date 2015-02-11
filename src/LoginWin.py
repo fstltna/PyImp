@@ -203,8 +203,8 @@ class loginWin:
         try:
             DBIO.load(newfile)
         except:
-            viewer.Error("PTkEI: Encountered error while loading database.\n"
-                         "PTkEI: Perhaps this is an old database?\n")
+            viewer.Error("PyImp: Encountered error while loading database.\n"
+                         "PyImp: Perhaps this is an old database?\n")
             traceback.print_exc()
             return
         self.getDBValues()

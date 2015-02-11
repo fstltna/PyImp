@@ -473,7 +473,7 @@ class EmpTime:
             variance = self.observedDrift - drift
             if variance < -300.0 or variance > 300.0:
                 # Something odd is happenining - reset the drift
-                viewer.Error("PTkEI - time oddity..")
+                viewer.Error("PyImp - time oddity..")
                 self.observedDrift = drift
                 self.uDB['drift'] = drift
             elif self.observedDrift > drift:
@@ -623,7 +623,7 @@ class DatabaseSaver:
             'planetype' : {},
             'shiptype' : {},
             'landtype' : {},
-            'login': {'host':"localhost", 'port':6665,
+            'login': {'host':"empiredirectory.net", 'port':3458,
                       'coun':"visitor", 'repr':"visitor"},
             'version': {
                 'worldsize':(255,255), 'maxCountries':255, 'ETUSeconds':1024,
@@ -698,7 +698,7 @@ class DatabaseSaver:
             megaDB = cPickle.load(fl)
             if megaDB['DB_Version'] != self.DBVersion:
                 raise self.dbError, (
-                    "PTkEI: Database has an incorrect version number.")
+                    "PyImp: Database has an incorrect version number.")
             fl.close()
             self.newDatabase = 0
             self.needSave = 0
@@ -713,7 +713,7 @@ class DatabaseSaver:
         if not self.needSave:
             # No need to save anything
             return
-        print "PTkEI: Saving DB to '%s'.." % self.filename
+        print "PyImp: Saving DB to '%s'.." % self.filename
         fl = open(self.filename, 'wb')
         cPickle.dump(megaDB, fl, 1)
         fl.close()

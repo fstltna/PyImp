@@ -762,7 +762,7 @@ class AsyncHandler:
         elif line[:1] == C_FLASH:
             viewer.flash(line[2:])
         else:
-            viewer.Error('PTkEI: Bad protocol "%s"' % (line,))
+            viewer.Error('PyImp: Bad protocol "%s"' % (line,))
 
     def lull(self):
         viewer.Process()

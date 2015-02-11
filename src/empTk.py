@@ -742,7 +742,7 @@ elif os.name == 'nt':
         Display.option_readfile(file, 'startupFile')
     del file
 
-##      print "PTkEI: Using Windows text selection hack."
+##      print "PyImp: Using Windows text selection hack."
 ##      def setFocus(event):
 ##  	event.widget.OldFocus = event.widget.focus_lastfor()
 ##  	event.widget.focus()
@@ -762,7 +762,7 @@ def InitFileHandler():
     global viewer
 
     if Tkinter.tkinter.createfilehandler is None:
-        print "PTkEI: Using emulated file handlers."
+        print "PyImp: Using emulated file handlers."
         def bogusFileHandler(file, mask, hdlr):
             global bogusFileTimer
             def hdl(file=file, mask=mask, hdlr=hdlr):
