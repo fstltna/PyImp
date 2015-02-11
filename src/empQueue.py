@@ -456,7 +456,7 @@ class EmpIOQueue:
 		    raise StopRead(StopReading)
                 if not tmp:
                     # Ughh.
-                    error = "Zero read on socket!"
+                    error = "Zero read on socket!" # ZZZ remove this?
                     self.loginParser.Disconnect()
 		    raise StopRead(StopReading)
                 # If a prompt is encountered anywhere in the buffered data,
@@ -606,7 +606,7 @@ class LoginHandler:
         self.postFlags = QU_FULLSYNC
 ##  	self.command = "\t\t-=-"
         self.command = ""
-## 	preFlags = QU_BURST
+ 	preFlags = QU_BURST	# XXX Comment this out
 ## 	self.pos = 0
 
 ##     def start(self):
@@ -672,8 +672,8 @@ class LoginHandler:
                 self.callback.login_error("[%s]%s" % (proto, msg))
                 return
             self.pos = 1
-            #empQueue.SendNow("user %s" % self.username) # activate FE mode
-            empQueue.SendNow("!%s" % self.username) # Maybe escape !?
+            #empQueue.SendNow("user %s" % self.username)
+            empQueue.SendNow("\!%s" % self.username) # Activate FE mode at login
         elif (self.pos == 1):
             if proto != C_INIT:
                 self.callback.login_error("[%s]%s" % (proto, msg))
