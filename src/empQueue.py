@@ -1,4 +1,4 @@
-"""Code to start and maintain empire connection"""
+"""Code to start and maintain imperium connection"""
 
 # version 1.1.1
 #    Copyright (C) 1998-1999 Kevin O'Connor
@@ -41,7 +41,7 @@ import empParse
 # the incoming/outgoing data.  This file also contains these other classes
 # and contains the basic building block for the chained display classes.  A
 # quick glance at the other files in this distribution will show that this
-# is the only file that references any of the low-level empire protocols
+# is the only file that references any of the low-level imperium protocols
 # (EG. C_PROMPT) - all that protocol stuff is handled here.
 
 # Note: To actually send commands, the standard method is to use the class
@@ -62,7 +62,7 @@ import empParse
 
 # The "data managers" are helper classes for EmpIOQueue.  These helper
 # classes essentially manage output from the server.  They strip the
-# low-level empire protocol stuff from the information and transmit the
+# low-level imperium protocol stuff from the information and transmit the
 # data using a variety of classes and methods.  The classes AsyncHandler,
 # LoginHandler, and NormalHandler, are these "data managers".  It is
 # important to note that AsyncHandler and LoginHandler have special
@@ -144,11 +144,11 @@ import empParse
 # Empire Protocol IDs
 C_CMDOK	 = "0"
 C_DATA	 = "1"
-C_INIT	 = "2"
+#C_INIT	 = "2"
+C_INIT	 = ":"
 C_EXIT	 = "3"
 C_FLUSH	 = "4"
 C_NOECHO = "5"
-C_PROMPT = "6"
 C_ABORT	 = "7"
 C_REDIR	 = "8"
 C_PIPE	 = "9"
@@ -158,6 +158,17 @@ C_EXECUTE= "c"
 C_FLASH	 = "d"
 C_INFORM = "e"
 C_LAST	 = "e"
+C_FESTR  = "!"
+C_PROMPT = "("
+C_COMMENT = "<"
+C_PLANET = "@"
+C_SHIP = "$"
+C_SCAN = ")"
+C_MISC = "*"
+C_WIN = "&"
+C_GETLINE = "["
+C_GET_CANC = "]"
+
 
 C_ASYNCS = (C_INFORM, C_FLASH)
 
@@ -252,7 +263,7 @@ class EmpIOQueue:
         else:
             self.flags = (self.FuncList[ls-1].postFlags
                           | self.FuncList[ls].preFlags)
-##  	self.debug("Leave doflags")
+  	self.debug("Leave doflags")	# ZZZ
 
     def sendCommand(self):
         """Send a command to the server."""
@@ -442,12 +453,12 @@ class EmpIOQueue:
                 except socket.error, e:
                     error = "Socket read exception: " + str(e)
                     self.loginParser.Disconnect()
-                    raise StopRead
+		    raise StopRead(StopReading)
                 if not tmp:
                     # Ughh.
                     error = "Zero read on socket!"
                     self.loginParser.Disconnect()
-                    raise StopRead
+		    raise StopRead(StopReading)
                 # If a prompt is encountered anywhere in the buffered data,
                 # send the next command immediately in QU_SYNC mode.
                 cnt = string__count(tmp, "\n"+__C_PROMPT)
@@ -485,7 +496,8 @@ class EmpIOQueue:
                 try: self__FuncList[0].line(data)
                 except: flashException()
                 # Check for prompt
-                if data[:1] == __C_PROMPT:
+                #if data[:1] == __C_PROMPT: # ZZZ
+                if data[:2] == C_FESTR + __C_PROMPT:	# Combine both
                     del self__FuncList[0]
                     self.FLWaitLev = self.FLWaitLev - 1
                     self.FLSentLev = self.FLSentLev - 1
@@ -642,7 +654,7 @@ class LoginHandler:
         del empQueue.socket
         empQueue.flags = QU_OFFLINE
 
-    def line(self, line):
+    def line(self, line): # ZZZ
         """EmpIOQueue Handler: Process a line of data."""
         proto = line[:1]
         msg = line[1:]
@@ -660,39 +672,13 @@ class LoginHandler:
                 self.callback.login_error("[%s]%s" % (proto, msg))
                 return
             self.pos = 1
-            empQueue.SendNow("user %s" % self.username)
+            #empQueue.SendNow("user %s" % self.username) # activate FE mode
+            empQueue.SendNow("!%s" % self.username) # Maybe escape !?
         elif (self.pos == 1):
-            if proto != C_CMDOK:
-                self.callback.login_error("[%s]%s" % (proto, msg))
-                return
-            self.pos = 2
-            empQueue.SendNow("coun %s" % ldb['coun'])
-        elif (self.pos == 2):
-            if proto != C_CMDOK:
-                self.callback.login_error("[%s]%s" % (proto, msg))
-                return
-            self.pos = 3
-            empQueue.SendNow("pass %s" % ldb['repr'])
-        elif (self.pos == 3):
-            if proto != C_CMDOK:
-                self.callback.login_error("[%s]%s" % (proto, msg))
-                return
-            if self.callback.login_kill:
-                self.pos = 4
-                empQueue.SendNow("kill")
-            else:
-                self.pos = 5
-                empQueue.SendNow("play")
-        elif (self.pos == 4):
-            if proto != C_EXIT:
-                self.callback.login_error("[%s]%s" % (proto, msg))
-                return
-            self.pos = 5
-            empQueue.SendNow("play")
-        elif (self.pos == 5):
             if proto != C_INIT:
                 self.callback.login_error("[%s]%s" % (proto, msg))
                 return
+            empQueue.SendNow("%s" % ldb['repr']) # Send Password
             # Login successful!
             self.pos = 99
             # Arghh - the flags must be set to FullSync, because FLWaitLev
@@ -762,7 +748,8 @@ class AsyncHandler:
         elif line[:1] == C_FLASH:
             viewer.flash(line[2:])
         else:
-            viewer.Error('PyImp: Bad protocol "%s"' % (line,))
+            #viewer.Error('PyImp: Bad protocol "%s"' % (line,))
+            viewer.flash(line) # XXX
 
     def lull(self):
         viewer.Process()
@@ -816,9 +803,10 @@ class NormalHandler:
     def line(self, line):
         """EmpIOQueue Handler: Process a line of data."""
         proto = line[:1]
+        subproto = line[1:1]
         msg = line[2:]
 
-        if proto not in (C_DATA, C_PROMPT, C_FLUSH):
+        if proto not in (C_FESTR):	# ZZZ Check for escape string
             # Can't handle the proto - send to async class.
             empQueue.defParser.line(line)
             return
@@ -828,7 +816,7 @@ class NormalHandler:
             self.atSubPrompt = 0
             self.out.Answer(None)
 
-        if proto == C_DATA:
+        if subproto in (C_DATA, C_COMMENT, C_PLANET, C_SHIP, C_SCAN, C_MISC, C_WIN, C_GETLINE, C_GET_CANC): # XXX
             if (self.msgMatch.match(msg)):
                 self.msgqueue.append(msg)
             else:
@@ -838,7 +826,7 @@ class NormalHandler:
                     self.out.data(i)
                 self.out.data(msg)
                 del self.msgqueue[:]
-        elif proto == C_PROMPT:
+        elif subproto == C_PROMPT:
             # If there are messages on the msgqueue then flash them out.
             for i in self.msgqueue:
                 viewer.flash(i)
@@ -846,12 +834,6 @@ class NormalHandler:
             ndb = empDb.megaDB['prompt']
             ndb['minutes'], ndb['BTU'] = map(int, string.split(msg))
             self.out.End(self.command)
-##	elif msg[0] == C_REDIR:
-##	    print "PE: Server Redirect requested:", msg[2:]
-##	elif msg[0] == C_PIPE:
-##	    print "PE: Server Pipe requested:", msg[2:]
-##	elif msg[0] == C_EXECUTE:
-##	    print "PE: Server Execute requested:", msg[2:]
         else:
             # Must be a C_FLUSH sub-prompt.
             eq = empQueue
@@ -901,6 +883,6 @@ def EmpData(username):
                       LoginHandler(viewer.loginCallback, username))
 
 # Hack!  There is a function pathPrefix that is not defined in this module,
-# but is setup for this module in empire.py.  See the line
+# but is setup for this module in pyimp.py.  See the line
 # "empQueue.pathPrefix = pathPrefix" in the initialize function of
-# empire.py.
+# pyimp.py.
