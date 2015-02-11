@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-    <title>Ptkei Command Documentation</title>
+    <title>PyImp Command Documentation</title>
     <style type="text/css">
       h1 { text-align: center; }
       td { width: 33%; }
@@ -27,7 +27,7 @@
 	      <li><a href="#dtele">dtele</a> - Dump all telegrams</li>
 	      
 	      <li><a href="#execute">execute</a> - Send the content of a
-		  file to the empire server.
+		  file to the imperium server.
 	      <li><a href="#ltest">ltest</a> - Compute the mobility
 		needed to move a land unit. 
 	      <li><a href="#null">null</a> - Run command with no output
@@ -41,7 +41,7 @@
 	      <li><a href="#remove">remove</a> - Remove foreign units
 	      from the database.
 	      <li><a href="#execute">runfeed</a> - Send the output of a
-		system command to the empire server.
+		system command to the imperium server.
 	    </ul>
 	  </td>
 	  <td valign="top">
@@ -96,10 +96,10 @@
 
 
     <p>This file is intended to give a brief summary of the "smart"
-    commands available in the Python/Tk empire client.</p>
+    commands available in the PyImp imperium client.</p>
 
     <p> Each of the following commands may be entered as if they were
-    a normal empire server command.  The client will automatically
+    a normal imperium server command.  The client will automatically
     recognize these commands and handle them locally, where
     applicable. </p>
 
@@ -132,13 +132,6 @@
     server.  Empire 4.x timestamps are used to ensure only recently
     updated values are returned.  It is a good idea to use this
     command instead of manually running dump yourself. </p>
-
-    <p> At one time, the server had a bug that caused empire updates
-    to modify sectors and units without updating the timestamps.  To
-    circumvent this problem, 'rdb' was expanded to use the form
-    'rerdb'.  A "re-refresh" will force this command to ignore
-    timestamps and dump the entire database.  It should not be
-    necessary to use this form of the command. </p>
 
     <p> Additionally, the command rdb (or rerdb) may contain a suffix
     that contains any combination of 'epslno'.  'e' stands for sector
@@ -183,7 +176,7 @@
 
     <h3><a name="redir">Redirections</a></h3>
 
-    <p>These  commands redirect the output of an empire command. </p>
+    <p>These  commands redirect the output of an imperium command. </p>
 
     <pre>&lt;cmd&gt; | &lt;program&gt;</pre>
     <p>Send output of &lt;cmd&gt; to the system command
@@ -250,7 +243,7 @@
     <p><strong>Note2:</strong> When in <a href="TIPS.html#burst">burst
     mode</a> aliases may also be evaluated for sub-prompts.  Because
     of this, it is a good idea to plan out aliases that don't easily
-    conflict with common empire sub-prompts.
+    conflict with common imperium sub-prompts.
 
     <h3><a name="burst">Command burst</a></h3>
     
@@ -484,7 +477,7 @@ Total movement cost cost: 80, new mob: 47</pre>
     window.  For example, the command "wind info Products" would send
     that 20 page manual to its own window with its own scrollbar.
     This window can then be left up for future reference; it will not
-    interfere with sending and receiving of additional empire
+    interfere with sending and receiving of additional imperium
     commands.  An unlimited number of these output windows may be used
     simultaneously.
 
@@ -554,9 +547,9 @@ Total movement cost cost: 80, new mob: 47</pre>
 
     <h4>Description</h4>
       
-    <p>This command locally emulates the empire server's sect command.
+    <p>This command locally emulates the imperium server's sect command.
     It can be used to mark sectors on the graphical map that meet a
-    provided empire selector.  It is intended to work similar to the
+    provided imperium selector.  It is intended to work similar to the
     server based "sect" command.
 
     <p><strong>Note:</strong> This command uses the internal database
@@ -611,15 +604,15 @@ Total movement cost cost: 80, new mob: 47</pre>
     foreach command.)  This sector's database is referenced when
     evaluation the rest of the command.
 
-    <p>&lt;cmd&gt; is an empire command that contains an arbitrary
+    <p>&lt;cmd&gt; is an imperium command that contains an arbitrary
     number of python expressions embedded within it.  The python
     expressions must be enclosed within [ and ] characters (the square
     brackets).  These python expressions are evaluated using a
     namespace from the specified database.  The names of the variables
-    are the same as their corresponding empire selectors, and similar
-    to the empire selectors they may be abbreviated (for example, both
+    are the same as their corresponding imperium selectors, and similar
+    to the imperium selectors they may be abbreviated (for example, both
     'newdes' and 'new' are equivalent).  In addition to the standard
-    empire selectors, there are two included aliases: sect (A string
+    imperium selectors, there are two included aliases: sect (A string
     containing the sector's x,y pair), and dist (A string containing
     the dist_x,dist_y pair).  See the <a
     href="TIPS.html#selectors">selectors section</a> of the TIPS file
@@ -655,17 +648,17 @@ Total movement cost cost: 80, new mob: 47</pre>
     correct!
 
     <p>&lt;sectors&gt; and &lt;selectors&gt; are
-    similar to those on the empire server.  &lt;sectors&gt;
+    similar to those on the imperium server.  &lt;sectors&gt;
     can be a range of sectors (x1:x2,y1:y2), an '*' to specify all
-    sectors, or an empire range of the form '#X'.
+    sectors, or an imperium range of the form '#X'.
     &lt;selectors&gt; is a series of variable conditions
     that may be specified using the form
     &quot;?&lt;var&gt;&lt;cond&gt;&lt;var&gt;&quot;
     where &lt;var&gt; is a either a constant or a valid
-    empire variable, and cond is one of '=', '&lt;', '&gt;'
+    imperium variable, and cond is one of '=', '&lt;', '&gt;'
     or '#'.  Any number of selectors may be specified by appending
     them with a '&amp;' character in-between.  See the <a
-    href="TIPS.html#selectors">empire selectors</a> section of the
+    href="TIPS.html#selectors">imperium selectors</a> section of the
     TIPS.html file for advanced information.
 
     <p>&lt;cmd&gt; is a string that will be parsed in the
@@ -939,7 +932,7 @@ null dump * f_dist
     <h4>Description</h4>
 
     <p>Don't run this - it is only useful for debugging. (And not very
-    useful at that.)  It will send the entire database to the empire
+    useful at that.)  It will send the entire database to the imperium
     console. </p>
     
   </body>

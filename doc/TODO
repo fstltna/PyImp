@@ -74,7 +74,7 @@ BUG: Fix problem with name in censor window.  If the name field becomes
 longer than the allotted space weird things happen.
 
 The login window could have a pull-down menu that would store a list of
-commonly used empire hosts/ports.  I'm really tired of having to look up
+commonly used imperium hosts/ports.  I'm really tired of having to look up
 the vampire blitz's IP address every time I wish to connect.
 
 Redo the color scheme.  During the development phase I simply choose colors
@@ -175,7 +175,7 @@ only when radar/lookout output is recognized.  This would certainly beat
 packing all those parsers into one big class..
 
 Possible storage of telegrams and announcements externally from the
-standard empire database.  This is a suggestion from Bernhard Reiter.  I'm
+standard imperium database.  This is a suggestion from Bernhard Reiter.  I'm
 not a proponent of this notion because I feel it increases code complexity.
 However, it would allow the telegrams and announcements to be viewed and
 edited with an external mailer programs.  It would also allow easy access
