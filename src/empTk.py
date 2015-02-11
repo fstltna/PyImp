@@ -141,7 +141,7 @@ class mainWin:
         self.Status = Tkinter.Entry(self.Root, name="status", relief='sunken')
         self.Status.pack(in_=statusbar, fill='both', expand=1)
         self.Status.bind('<Key-Return>', self.DoStatus)
-        self.Status.insert(0, "Welcome to empire!")
+        self.Status.insert(0, "Welcome to Imperium!")
         self.Status['state']='disabled'
 
 ##  	# Create a main PanedWidget with top and bottom panes.
