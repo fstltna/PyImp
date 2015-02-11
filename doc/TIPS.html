@@ -24,11 +24,11 @@ The client takes arguments of the following form:
 <p>The flag '-t' instructs the client to only use text mode. When this flag is given, the Tk interface will not be contacted, and no graphical window will be opened.</p>
 <p>Conversely, the flag '-x' instructs the client to only use the graphical mode. Although it may appear that this is the default behavior, it differs slightly. The default behavior is to attempt to load the graphical interface and then revert to text if that fails. With the -x flag, if the graphic startup fails the client will abort with a full stack trace. This option is only useful when debugging a graphical connection.</p>
 <p>The '-n' flag prevents the client from automatically connecting to a server. This can be used to bring the client and database up while remaining offline.</p>
-<p>Any number of -I flags may be given to list a series of directories that will be prepended to the search path. The search path is used to locate the standard initialization files: TkOption, first.emp, start.emp, connect.emp. The default search path contains the current directory followed by the installation directory (the directory containing the pyimp.py file). Since the default is usually sufficient, this option is not normally necessary.</p>
+<p>Any number of -I flags may be given to list a series of directories that will be prepended to the search path. The search path is used to locate the standard initialization files: TkOption, first.imp, start.imp, connect.imp. The default search path contains the current directory followed by the installation directory (the directory containing the pyimp.py file). Since the default is usually sufficient, this option is not normally necessary.</p>
 <p>At the end of the options list, the filename for a database may be given. If this filename is specified then the imperium database will be stored in this file. Otherwise, the filename defaults to 'EmpDB'.</p>
 <hr>
 <p><a name="refresh"><h2>Refreshing the Display:</h2></a></p>
-<p>The client updates the map display using information gathered from user commands issued to the server. There are two primary commands for gathering this data: dump commands, and map commands. Normally, dump information is gathered via the <a href="commands.html#rdb">rdb</a> client command. Unfortunately, there is no automated method for obtaining map information. Normally the map information does not change, but occasionally it will be necessary to refresh the display. To aid in this process, the default start.emp file contains an alias: maps. The alias "maps" will issue a "map *" followed by the equivalent of a "radar *".</p>
+<p>The client updates the map display using information gathered from user commands issued to the server. There are two primary commands for gathering this data: dump commands, and map commands. Normally, dump information is gathered via the <a href="commands.html#rdb">rdb</a> client command. Unfortunately, there is no automated method for obtaining map information. Normally the map information does not change, but occasionally it will be necessary to refresh the display. To aid in this process, the default start.imp file contains an alias: maps. The alias "maps" will issue a "map *" followed by the equivalent of a "radar *".</p>
 <p>If the client is being used to connect to a country that has already expanded, it may be useful to issue a "bmap *" command. Normally the client does not need to refresh a countries' bmap because most commands that update the bmap are parsed by the client directly.</p>
 <hr>
 <p><a name="selectors"><h2>Simulated Imperium Selectors:</h2></a></p>
@@ -175,7 +175,7 @@ navigate, march, transport, explore, attack, etc.
 macros and aliases. Often these aliases are very predictable, and the
 speed benefit of using burst is noticeable. For example, internally the
 rdb command, and the telegram/announcement sender use this feature to
-significantly improve performance. Also, the default "start.emp" file
+significantly improve performance. Also, the default "start.imp" file
 defines many macros that utilize burst.
 
 

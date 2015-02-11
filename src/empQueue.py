@@ -687,17 +687,17 @@ class LoginHandler:
             empQueue.doFlags()
             # run the initialization script
             if empDb.DBIO.newDatabase:
-                viewer.ioq.Send("exec "+pathPrefix("first.emp"))
+                viewer.ioq.Send("exec "+pathPrefix("first.imp"))
                 empDb.DBIO.newDatabase = 0
             # Note the change in the database.
             empDb.DBIO.needSave = 1
             # Start boot-up script
             if self.srcStart:
-                viewer.ioq.Send("exec "+pathPrefix("start.emp"))
+                viewer.ioq.Send("exec "+pathPrefix("start.imp"))
                 self.firstConnect = 0
                 self.srcStart = 0
             # Start connect script
-            viewer.ioq.Send("exec "+pathPrefix("connect.emp"))
+            viewer.ioq.Send("exec "+pathPrefix("connect.imp"))
             self.callback.login_success()
             self.out = NormalHandler(self.command, viewer)
             self.out.start()

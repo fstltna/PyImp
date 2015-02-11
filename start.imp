@@ -1,4 +1,4 @@
-# start.emp -- This file is sourced each time the client starts up.
+# start.imp -- This file is sourced each time the client starts up.
 #	    Place commands here that initialize the client.  (For example,
 #	    alias commands.)
 
