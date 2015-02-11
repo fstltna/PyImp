@@ -12,8 +12,8 @@ sys.path[0] = os.path.join(sys.path[0], "../src")
 import empDb
 
 if len(sys.argv) == 1:
-    new = 'EmpDB'
-    old = 'EmpDB.old'
+    new = 'ImpDB'
+    old = 'ImpDB.old'
 elif len(sys.argv) == 2:
     new = sys.argv[1]
     old = new + '.old'

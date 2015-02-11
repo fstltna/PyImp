@@ -176,7 +176,7 @@ To contact the developers, please send email to <info@empiredirectory.net>.
     if len(args) == 1:
         FILE = args[0]
     else:
-        FILE = "EmpDB"
+        FILE = "ImpDB"
     # Check for included directory list
     # The default include path is: the current directory, the program's
     # directory.
