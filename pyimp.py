@@ -24,7 +24,7 @@ import getopt
 import string
 import operator
 import traceback
-import pygame
+#import pygame		# Not used right now
 import time
 
 # Key Ideas:
