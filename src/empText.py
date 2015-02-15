@@ -131,10 +131,10 @@ class SText:
                 return
             self.login_kill = 0
         ldb = empDb.megaDB['login']
-        t = raw_input("Country? [%s] " % ldb['coun'])
+        t = raw_input(":Enter player name: [%s] " % ldb['coun'])
         if t:
             ldb['coun'] = t
-        t = raw_input("Representative? [%s] " % ldb['repr'])
+        t = raw_input(":Enter player password: [%s] " % ldb['repr'])
         if t:
             ldb['repr'] = t
         self.loginHandler.retry()

@@ -178,7 +178,7 @@ class EmpParse:
                           , CmdOut, CmdNova, CmdPredict, CmdMover
                           , CmdRaw, CmdOrigin, CmdMMove, CmdEMove
                           , CmdRemove, CmdDanno, CmdDtele, CmdProjection
-                          , CmdDmove, CmdSetFood, CmdLTest, CmdCoords)
+                          , CmdDmove, CmdSetFood, CmdLTest)
 
     def registerCmds(self, *args):
         """Register a list of commands."""
@@ -1674,56 +1674,4 @@ class CmdLTest(baseCommand):
             newmob = int(unit['mob'] - mcost)
             self.out.data("Total movement cost: %d, new mob: %d" %
                           (unit['mob'] - newmob, newmob))
-
-class CmdCoords(baseCommand):
-    description = "Translate coordinates or set translation coordinate"
-
-    sendRefresh = "e"
-    defaultPreList = 1
-    defaultBinding = (('coordinate', 5),)
-
-    commandUsage = "coordinate <country number> <your x,y> [<their x,y>]"
-    commandFormat = re.compile(
-        r"^(?P<cnumber>\S+)\s+(?P<yourcoord>\S+)(?:\s+(?P<theircoord>\S+))?$")
-
-    def receive(self):
-        mm = self.parameterMatch
-        cnumber = mm.group('cnumber')
-        coord1 = mm.group('yourcoord')
-        coord2 = mm.group('theircoord')
-        coordtype = 0
-        reverse = 0
-        sectors = ''
- 
-        if int(cnumber) <0:
-            cnumber = str(int(cnumber) * -1)
-            reverse = 1
-
-        if coord2 is not None:
-            coordtype = 1
-            x,y = coord1.split(',')
-            x = int(x)
-            y = int(y)
-            tx,ty = coord2.split(',')
-            tx = int(tx)
-            ty = int(ty)
-            deltax = x - tx
-            deltay = y - ty
-            empDb.megaDB['coordtable'][cnumber] = { 'deltax': deltax, 'deltay': deltay }
-            self.out.data("  Country: (#%s) set" % cnumber)
-        else:
-            deltax = empDb.megaDB['coordtable'][cnumber]['deltax']
-            deltay = empDb.megaDB['coordtable'][cnumber]['deltay']
-            x,y = coord1.split(',')
-            x = int(x)
-            y = int(y)
-            if not reverse :
-                newx = x - deltax
-                newy = y - deltay
-            else:
-                newx = x + deltax
-                newy = y + deltay
-            newcoord = empDb.sectorWrap((newx,newy))
-            self.out.data("  Country: #%s coordinate: %s" % ( cnumber, newcoord))
-#               self.out.data("  country number (#%s)  coord1 (%s) " % ( cnumber, coord1))
 
